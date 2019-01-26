@@ -18,7 +18,7 @@ public class State {
     /**
      * Generate new State with initial settings
      */
-    State() {
+   public  State() {
         board = new char[][]{
                 {'k', 'q', 'b', 'n', 'r'},
                 {'p', 'p', 'p', 'p', 'p'},

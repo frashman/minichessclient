@@ -12,4 +12,10 @@ public enum Color {
     public char getColorCode() {
         return colorCode;
     }
+    
+    public static Color getColor(char c) {
+      if ((""+c).toUpperCase().equals(""+WHITE.getColorCode())) return Color.WHITE;
+      if ((""+c).toUpperCase().equals(""+BLACK.getColorCode())) return Color.BLACK; 
+      return Color.EMPTY;
+    }
 }

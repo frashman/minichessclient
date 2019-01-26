@@ -333,10 +333,13 @@ public class Client {
      * @return  opponent move string
      */
     public String getMove() throws IOException {
+      
         String line;
         char ch;
         while (true) {
+   
             line = in.readLine();
+            
             if (line == null)
                 return null;
             if (line.length() == 0)

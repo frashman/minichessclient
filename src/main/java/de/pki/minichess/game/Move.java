@@ -19,6 +19,18 @@ public class Move {
         this.from = from;
         this.to = to;
     }
+    
+    /**
+     * Generates new Move from given move string.
+     * 
+     * @param moveString A move String (i.e. a1-b2) 
+     */
+    Move(String moveString) {
+      String[] parts = moveString.split("-");
+      this.from = new Square(parts[0]);
+      this.to = new Square(parts[1]);
+      
+    }
 
     /**
      * Getter starting position
@@ -45,6 +57,18 @@ public class Move {
      */
     public String toString() {
         return from.getX() + "," + from.getY() + "-" + to.getX() + "," + to.getY();
+    }
+    
+    /**
+     * Returns starting and destination positions as string
+     *
+     * @return
+     */
+    public String toTelnetString() {
+      char a = 'a';
+      char fromChar = (char)(a + from.getX());
+      char toChar = ((char)(a + to.getX()));
+        return  (""+fromChar) +   (6-from.getY()) + "-" + (""+toChar)  + (6-to.getY());
     }
 
     /**

@@ -21,6 +21,8 @@ public class Console {
   private Client client;
   // Reads input from the command line.
   private Scanner scanner = new Scanner(System.in);
+  
+  private char color;
 
   /**
    * Initializes the connection to the telnet server.
@@ -30,7 +32,7 @@ public class Console {
    */
   public Console() throws IOException {
     System.out.println("================\n" //
-        + "=   Minichess  =\n" //
+        + "=   Minichess v1.0  =\n" //
         + "================\n");
     //$NON-NLS-1$
     int port = Integer.parseInt(Messages.getString("Console.port"));
@@ -150,11 +152,13 @@ public class Console {
 
   private String accept(String gameId) throws IOException {
     char response = this.client.accept(gameId);
+    this.color = response;
     return "Game started. You are " + response;
   }
 
   private String accept(String gameId, String color) throws IOException {
     this.client.accept(gameId, color.charAt(0));
+    this.color = color.charAt(0);
     return "Game started. You are " + color.charAt(0);
   }
 
@@ -196,11 +200,13 @@ public class Console {
 
   private String offerGameAndWait() throws IOException, RuntimeException {
     char color = this.client.offerGameAndWait();
+    this.color = color;
     return "Game started. You play " + color;
   }
 
   private String offerGameAndWait(String color) throws IOException, RuntimeException {
     this.client.offerGameAndWait(color.charAt(0));
+    this.color = color.charAt(0);
     return "Game started. You play " + color.charAt(0);
   }
 
@@ -211,7 +217,11 @@ public class Console {
   }
 
   private String runGame() {
-    return new GameController().runGame();
+    try {
+      return new GameController(client).runGame(this.color);
+    } catch (IOException e) {
+      return "Error while communicating with the telnet server.";
+    }
   }
 
   private String exit() throws IOException {
